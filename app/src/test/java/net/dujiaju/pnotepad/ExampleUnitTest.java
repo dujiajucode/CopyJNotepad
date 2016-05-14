@@ -1,4 +1,4 @@
-package net.dujiaju.copyjnotepad;
+package net.dujiaju.pnotepad;
 
 import org.junit.Test;
 

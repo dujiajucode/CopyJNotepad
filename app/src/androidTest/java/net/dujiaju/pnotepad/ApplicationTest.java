@@ -1,4 +1,4 @@
-package net.dujiaju.copyjnotepad;
+package net.dujiaju.pnotepad;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
