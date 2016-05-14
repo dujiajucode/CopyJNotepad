@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">J.Notepad(仿制版)</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">P.Notepad</string>
+    <string name="action_addFolder">添加文件夹</string>
+    <string name="action_deleteFolder">删除文件夹</string>
+    <string name="action_settings">设置</string>
+
 </resources>

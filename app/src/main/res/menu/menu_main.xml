@@ -3,6 +3,17 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="net.dujiaju.myapplication.MainActivity">
     <item
+        android:id="@+id/action_addFolder"
+        android:orderInCategory="100"
+        android:title="@string/action_addFolder"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_deleteFolder"
+        android:orderInCategory="100"
+        android:title="@string/action_deleteFolder"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
