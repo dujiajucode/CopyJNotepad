@@ -110,6 +110,7 @@ public class ArticleListFragment extends Fragment {
                 drawable1.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
                 mTitleView.setCompoundDrawables(drawable1, null, null, null);//只放左边
                 mTitleView.setOnLongClickListener(new ItemLongClickListener());
+                mTitleView.setOnClickListener(new ItemClickListener());
             }
         }
 
@@ -143,11 +144,20 @@ public class ArticleListFragment extends Fragment {
                 UUID id = mArticlesList.get(mArticlesList.indexOf(article)).getID();
                 mAdapter.removeItem(article);
             }
-
-
             return true;
         }
     }
+
+    class ItemClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            if (v.getTag() != null) {
+                Snackbar.make(mView, "open", Snackbar.LENGTH_LONG).show();
+            }
+        }
+    }
+
 
     class RecycleViewDivider extends RecyclerView.ItemDecoration {
 
