@@ -4,4 +4,7 @@
     <string name="action_deleteFolder">删除文件夹</string>
     <string name="action_settings">设置</string>
 
+    <string name="notepad_delete">笔记已删除</string>
+    <string name="notepad_undo">撤销</string>
+
 </resources>

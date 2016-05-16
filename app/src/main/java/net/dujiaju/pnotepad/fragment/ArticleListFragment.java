@@ -9,7 +9,9 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,9 +20,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import net.dujiaju.pnotepad.R;
+import net.dujiaju.pnotepad.model.Article;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by lilujia on 16/5/15.
@@ -29,9 +33,11 @@ public class ArticleListFragment extends Fragment {
 
     public static final String ARTICLE_LIST_FRAGMENT_FOLDER = "ARTICLE_LIST_FRAGMENT_FOLDER";
 
-    private List<String> mArticlesList;
+    private List<Article> mArticlesList;
 
     private String mTitle;
+
+    private View mView;
 
     private MyAdapter mAdapter;
 
@@ -48,13 +54,16 @@ public class ArticleListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_article_list, container, false);
-
+        mView = view;
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         mArticlesList = new ArrayList<>();
         for (int i = 1; i < 100; i++) {
-            mArticlesList.add("" + i);
+            Article article = new Article();
+            article.setTitle("" + i);
+            article.setID(UUID.randomUUID());
+            mArticlesList.add(article);
         }
         mAdapter = new MyAdapter();
 
@@ -62,6 +71,7 @@ public class ArticleListFragment extends Fragment {
                 LinearLayoutManager.HORIZONTAL));
 
         recyclerView.setAdapter(mAdapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         //recyclerView.setHasFixedSize(true);
 
@@ -80,7 +90,8 @@ public class ArticleListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(MyAdapter.ViewHolder holder, int position) {
-            holder.mTitleView.setText(mArticlesList.get(position));
+            holder.mTitleView.setText(mArticlesList.get(position).getTitle());
+            holder.mTitleView.setTag(mArticlesList.get(position));
         }
 
         @Override
@@ -98,11 +109,47 @@ public class ArticleListFragment extends Fragment {
                 Drawable drawable1 = getResources().getDrawable(R.drawable.file);
                 drawable1.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
                 mTitleView.setCompoundDrawables(drawable1, null, null, null);//只放左边
+                mTitleView.setOnLongClickListener(new ItemLongClickListener());
             }
+        }
+
+        public void addItem(Article article, int position) {
+            mArticlesList.add(position, article);
+            notifyItemInserted(position); //Attention!
+        }
+
+        public void removeItem(final Article article) {
+            final int position = mArticlesList.indexOf(article);
+            mArticlesList.remove(position);
+            notifyItemRemoved(position);
+            Snackbar.make(mView, R.string.notepad_delete, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.notepad_undo, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //撤销
+                            addItem(article, position);
+                        }
+                    }).show();
         }
     }
 
-    public class RecycleViewDivider extends RecyclerView.ItemDecoration {
+    class ItemLongClickListener implements View.OnLongClickListener {
+
+        @Override
+        public boolean onLongClick(View v) {
+
+            if (v.getTag() != null) {
+                Article article = (Article) v.getTag();
+                UUID id = mArticlesList.get(mArticlesList.indexOf(article)).getID();
+                mAdapter.removeItem(article);
+            }
+
+
+            return true;
+        }
+    }
+
+    class RecycleViewDivider extends RecyclerView.ItemDecoration {
 
         private Paint mPaint;
         private Drawable mDivider;
