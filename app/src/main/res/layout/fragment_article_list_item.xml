@@ -7,8 +7,10 @@
           android:layout_marginTop="9dp"
           android:drawableLeft="@drawable/file"
           android:drawablePadding="20dp"
+          android:ellipsize="end"
           android:gravity="center_vertical"
           android:orientation="horizontal"
+          android:singleLine="true"
           android:textColor="#000"
           android:textSize="22sp"
     />

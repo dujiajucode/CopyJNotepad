@@ -59,9 +59,10 @@ public class ArticleListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         mArticlesList = new ArrayList<>();
-        for (int i = 1; i < 100; i++) {
+        for (int i = 1; i < 10; i++) {
             Article article = new Article();
-            article.setTitle("" + i);
+            article.setTitle(UUID.randomUUID().
+                    toString().replaceAll("-", ""));
             article.setID(UUID.randomUUID());
             mArticlesList.add(article);
         }
@@ -72,8 +73,7 @@ public class ArticleListFragment extends Fragment {
 
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        //recyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(true);
 
         return view;
     }
