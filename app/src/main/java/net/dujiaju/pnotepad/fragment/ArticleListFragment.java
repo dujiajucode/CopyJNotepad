@@ -107,10 +107,13 @@ public class ArticleListFragment extends Fragment {
                 super(v);
                 mTitleView = (TextView) v.findViewById(R.id.tvTitle);
                 Drawable drawable1 = getResources().getDrawable(R.drawable.file);
-                drawable1.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
-                mTitleView.setCompoundDrawables(drawable1, null, null, null);//只放左边
+                if (drawable1 != null) {
+                    drawable1.setBounds(0, 0, 100, 100);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+                    mTitleView.setCompoundDrawables(drawable1, null, null, null);//只放左边
+                }
                 mTitleView.setOnLongClickListener(new ItemLongClickListener());
                 mTitleView.setOnClickListener(new ItemClickListener());
+
             }
         }
 
