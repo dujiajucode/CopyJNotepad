@@ -6,7 +6,8 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v13.app.FragmentPagerAdapter;
+import android.support.design.widget.TabLayout;
+import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +18,6 @@ import android.view.View;
 
 import net.dujiaju.pnotepad.fragment.ArticleListFragment;
 import net.dujiaju.pnotepad.model.Folder;
-import net.dujiaju.pnotepad.view.SlidingTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,19 +56,24 @@ public class MainActivity extends AppCompatActivity {
         mFolderList.add(new Folder(1, "第一个文件夹"));
         mFolderList.add(new Folder(2, "第二个文件夹"));
         mFolderList.add(new Folder(3, "第三个文件夹"));
+        mFolderList.add(new Folder(4, "第三个文件夹"));
+        mFolderList.add(new Folder(5, "第三个文件夹"));
+        mFolderList.add(new Folder(6, "第三个文件夹"));
+        mFolderList.add(new Folder(7, "第三个文件夹"));
+        mFolderList.add(new Folder(8, "第三个文件夹"));
+        mFolderList.add(new Folder(9, "第三个文件夹"));
 
-        SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.tablayout);
-        assert slidingTabLayout != null;
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        assert tabLayout != null;
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         assert viewPager != null;
         mPagerAdapter = new MyPagerAdapter(getFragmentManager());
-        viewPager.setOffscreenPageLimit(mFolderList.size());
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(mPagerAdapter);
-        slidingTabLayout.setViewPager(viewPager, calculateScreenX());
-    }
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-    private int calculateScreenX() {
-        return getResources().getDisplayMetrics().widthPixels;
+
     }
 
 
@@ -94,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    class MyPagerAdapter extends FragmentPagerAdapter {
+    class MyPagerAdapter extends FragmentStatePagerAdapter {
 
 
         public MyPagerAdapter(FragmentManager fm) {
