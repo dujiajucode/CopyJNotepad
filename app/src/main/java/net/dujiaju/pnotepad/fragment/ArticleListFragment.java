@@ -35,7 +35,7 @@ public class ArticleListFragment extends Fragment {
 
     private List<Article> mArticlesList;
 
-    private String mTitle;
+    private int mFolderId;
 
     private View mView;
 
@@ -46,7 +46,7 @@ public class ArticleListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         savedInstanceState = getArguments();
         if (savedInstanceState != null) {
-            mTitle = savedInstanceState.getString(ARTICLE_LIST_FRAGMENT_FOLDER);
+            mFolderId = savedInstanceState.getInt(ARTICLE_LIST_FRAGMENT_FOLDER, -1);
         }
     }
 

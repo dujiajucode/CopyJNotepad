@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import net.dujiaju.pnotepad.fragment.ArticleListFragment;
+import net.dujiaju.pnotepad.model.Folder;
+import net.dujiaju.pnotepad.view.SlidingTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
 
-    private List<String> mFolderList;
+    private List<Folder> mFolderList;
     private MyPagerAdapter mPagerAdapter;
 
     @Override
@@ -32,14 +34,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
         assert toolbar != null;
         toolbar.setNavigationIcon(R.drawable.ic_menu_slide);
-
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         assert fab != null;
@@ -52,14 +53,22 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mFolderList = new ArrayList<>();
-        mFolderList.add("1");
-        mFolderList.add("2");
-        mFolderList.add("3");
+        mFolderList.add(new Folder(1, "第一个文件夹"));
+        mFolderList.add(new Folder(2, "第二个文件夹"));
+        mFolderList.add(new Folder(3, "第三个文件夹"));
 
+        SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.tablayout);
+        assert slidingTabLayout != null;
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         assert viewPager != null;
         mPagerAdapter = new MyPagerAdapter(getFragmentManager());
+        viewPager.setOffscreenPageLimit(mFolderList.size());
         viewPager.setAdapter(mPagerAdapter);
+        slidingTabLayout.setViewPager(viewPager, calculateScreenX());
+    }
+
+    private int calculateScreenX() {
+        return getResources().getDisplayMetrics().widthPixels;
     }
 
 
@@ -96,9 +105,14 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             Fragment fragment = new ArticleListFragment();
             Bundle bundle = new Bundle();
-            bundle.putString(ArticleListFragment.ARTICLE_LIST_FRAGMENT_FOLDER, mFolderList.get(position));
+            bundle.putInt(ArticleListFragment.ARTICLE_LIST_FRAGMENT_FOLDER, mFolderList.get(position).getID());
             fragment.setArguments(bundle);
             return fragment;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFolderList.get(position).getTitle();
         }
 
         @Override
@@ -106,4 +120,5 @@ public class MainActivity extends AppCompatActivity {
             return mFolderList == null ? 0 : mFolderList.size();
         }
     }
+
 }
