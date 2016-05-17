@@ -59,7 +59,7 @@ public class ArticleListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         mArticlesList = new ArrayList<>();
-        for (int i = 1; i < 10; i++) {
+        for (int i = 0; i < mFolderId; i++) {
             Article article = new Article();
             article.setTitle(UUID.randomUUID().
                     toString().replaceAll("-", ""));

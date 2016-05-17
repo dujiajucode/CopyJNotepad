@@ -53,15 +53,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mFolderList = new ArrayList<>();
-        mFolderList.add(new Folder(1, "第一个文件夹"));
-        mFolderList.add(new Folder(2, "第二个文件夹"));
-        mFolderList.add(new Folder(3, "第三个文件夹"));
-        mFolderList.add(new Folder(4, "第三个文件夹"));
-        mFolderList.add(new Folder(5, "第三个文件夹"));
-        mFolderList.add(new Folder(6, "第三个文件夹"));
-        mFolderList.add(new Folder(7, "第三个文件夹"));
-        mFolderList.add(new Folder(8, "第三个文件夹"));
-        mFolderList.add(new Folder(9, "第三个文件夹"));
+        for (int i = 1; i < 11; i++) {
+            mFolderList.add(new Folder(i, "第" + i + "个文件夹"));
+        }
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
         assert tabLayout != null;
